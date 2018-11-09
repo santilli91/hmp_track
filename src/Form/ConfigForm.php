@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ConfigForm extends FormBase {
 	public function buildForm(array $form, FormStateInterface $form_state) {
-
+		$hmp_track = \Drupal::state()->get('hmp_track');
 		/** Woopra Info **/
 		$form['woopra'] = array(
 			'#type' => 'item',
@@ -17,7 +17,7 @@ class ConfigForm extends FormBase {
 		);
 		$form['woopra_id'] = array(
 			'#type' => 'textfield',
-			'#default_value' => \Drupal::state()->get('woopra_id'),
+			'#default_value' => $hmp_track['woopra_id'],
 			'#title' => 'Woopra ID (domain name): ',
 		);
 		
@@ -28,7 +28,7 @@ class ConfigForm extends FormBase {
 		);
 		$form['advertserve_url'] = array(
 			'#type' => 'textfield',
-			'#default_value' => \Drupal::state()->get('advertserve_url'),
+			'#default_value' => $hmp_track['advertserve_url'],
 			'#title' => 'AdvertServe URL (full url): ',
 		);
 
@@ -39,12 +39,12 @@ class ConfigForm extends FormBase {
 		);
 		$form['proclivity_sid'] = array(
 			'#type' => 'textfield',
-			'#default_value' => \Drupal::state()->get('proclivity_sid'),
+			'#default_value' => $hmp_track['proclivity_sid'],
 			'#title' => 'SID (Site ID): ',
 		);
 		$form['proclivity_puid'] = array(
 			'#type' => 'textfield',
-			'#default_value' => \Drupal::state()->get('proclivity_puid'),
+			'#default_value' => $hmp_track['proclivity_puid'],
 			'#title' => 'PUID (Publisher ID): ',
 		);
 
@@ -55,7 +55,7 @@ class ConfigForm extends FormBase {
 		);
 		$form['dmd_id'] = array(
 			'#type' => 'textfield',
-			'#default_value' => \Drupal::state()->get('dmd_id'),
+			'#default_value' => $hmp_track['dmd_id'],
 			'#title' => 'DMD Site ID: ',
 		);
 
@@ -77,11 +77,14 @@ class ConfigForm extends FormBase {
 
 
 	public function submitForm(array &$form, FormStateInterface $form_state) {
-		\Drupal::state()->set('woopra_id',$form_state->getValue('woopra_id'));
-		\Drupal::state()->set('advertserve_url',$form_state->getValue('advertserve_url'));
-		\Drupal::state()->set('proclivity_sid',$form_state->getValue('proclivity_sid'));
-		\Drupal::state()->set('proclivity_puid',$form_state->getValue('proclivity_puid'));
-		\Drupal::state()->set('dmd_id',$form_state->getValue('dmd_id'));
+		$hmp_track = array(
+			'woopra_id'			=>	$form_state->getValue('woopra_id'),
+			'advertserve_url'	=>	$form_state->getValue('advertserve_url'),
+			'proclivity_sid'	=>	$form_state->getValue('proclivity_sid'),
+			'proclivity_puid'	=>	$form_state->getValue('proclivity_puid'),
+			'dmd_id'			=>	$form_state->getValue('dmd_id')
+		);
+		\Drupal::state()->set('hmp_track',$hmp_track);
 	}
 
 

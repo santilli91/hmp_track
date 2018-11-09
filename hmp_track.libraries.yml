@@ -1,0 +1,9 @@
+hmp_track:
+  version: 1.x
+  css:
+  js:
+    js/hmp_track.js: { scope: 'footer' }
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

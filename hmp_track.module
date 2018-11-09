@@ -1,0 +1,8 @@
+<?php
+
+/** Page Attachements **/
+function hmp_track_page_attachments(array &$attachments) {
+	$hmp_track = \Drupal::state()->get('hmp_track');
+	$attachments['#attached']['drupalSettings']['hmp_track'] = $hmp_track;
+  	$attachments['#attached']['library'][] = 'hmp_track/hmp_track';
+}
