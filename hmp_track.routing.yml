@@ -1,0 +1,7 @@
+hmp_track.config_form:
+  path: '/admin/config/tracking'
+  defaults:
+    _form: '\Drupal\hmp_track\Form\ConfigForm'
+    _title: 'Tracking Configuration'
+  requirements:
+    _permission: 'administer nodes'
