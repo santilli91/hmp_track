@@ -6,3 +6,19 @@ function hmp_track_page_attachments(array &$attachments) {
 	$attachments['#attached']['drupalSettings']['hmp_track'] = $hmp_track;
   	$attachments['#attached']['library'][] = 'hmp_track/hmp_track';
 }
+
+/** Header Preprocess **/
+function hmp_track_library_info_build() {
+	$libraries = [];
+	$hmp_track = \Drupal::state()->get('hmp_track');
+	if($hmp_track['proclivity_px'] != '') {
+		$libraries['hmp_track'] = [
+			'js' => [
+				$hmp_track['proclivity_px'] => [],
+			]
+		];
+	}
+	return $libraries;
+}
+
+/** **/
