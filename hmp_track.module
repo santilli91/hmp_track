@@ -7,7 +7,7 @@ function hmp_track_page_attachments(array &$attachments) {
   	$attachments['#attached']['library'][] = 'hmp_track/hmp_track';
 }
 
-/** Header Preprocess **/
+/** Dynamic Libraries **/
 function hmp_track_library_info_build() {
 	$libraries = [];
 	$hmp_track = \Drupal::state()->get('hmp_track');
