@@ -1,0 +1,152 @@
+<?php
+
+use Drupal\Core\Database\Database;
+
+/** Schema **/
+
+function hmp_track_schema() {
+	$spec = array(
+		'description' => 'HMP Track - Ads',
+		'fields' => array(
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			'name' => array(
+				'description' => 'Roadblock Name',
+				'type' => 'varchar',
+				'length' => 255,
+			),
+			'ad_id' => array(
+				'description' => 'ID',
+				'type' => 'varchar',
+				'length' => 64,
+			),
+		),
+		'primary key' => array('id'),
+	); 
+	$schema = Database::getConnection()->schema();
+	$schema->createTable('hmp_track_ads', $spec);
+
+	$spec = array(
+		'description' => 'HMP Track - URI',
+		'fields' => array(
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			'uri' => array(
+				'description' => 'Roadblock URI',
+				'type' => 'varchar',
+				'length' => 255,
+			),
+			'aid' => array(
+				'description' => 'ID',
+				'type' => 'int',
+			),
+		),
+		'primary key' => array('id'),
+	); 
+	$schema = Database::getConnection()->schema();
+	$schema->createTable('hmp_track_ads_uri', $spec);
+
+	$spec = array(
+		'description' => 'HMP Track - Taxonomy',
+		'fields' => array(
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			'tid' => array(
+				'description' => 'Roadblock TID',
+				'type' => 'int',
+			),
+			'aid' => array(
+				'description' => 'ID',
+				'type' => 'int',
+			),
+		),
+		'primary key' => array('id'),
+	); 
+	$schema = Database::getConnection()->schema();
+	$schema->createTable('hmp_track_ads_taxonomy', $spec);
+}
+
+/** 
+	Update 8.1.01 
+	-Added Road Blocking Base Table
+	-Added Road Blocking URI table
+**/
+function hmp_track_update_8101() {
+	$spec = array(
+		'description' => 'HMP Track - Ads',
+		'fields' => array(
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			'name' => array(
+				'description' => 'Roadblock Name',
+				'type' => 'varchar',
+				'length' => 255,
+			),
+			'ad_id' => array(
+				'description' => 'ID',
+				'type' => 'varchar',
+				'length' => 64,
+			),
+		),
+		'primary key' => array('id'),
+	); 
+	$schema = Database::getConnection()->schema();
+	$schema->createTable('hmp_track_ads', $spec);
+
+	$spec = array(
+		'description' => 'HMP Track - URI',
+		'fields' => array(
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			'uri' => array(
+				'description' => 'Roadblock URI',
+				'type' => 'varchar',
+				'length' => 255,
+			),
+			'aid' => array(
+				'description' => 'ID',
+				'type' => 'int',
+			),
+		),
+		'primary key' => array('id'),
+	); 
+	$schema = Database::getConnection()->schema();
+	$schema->createTable('hmp_track_ads_uri', $spec);
+}
+
+/** 
+	Update 8.1.02 
+	-Added Ad Roadblocking Taxonomy Table
+**/
+function hmp_track_update_8102() {
+	$spec = array(
+		'description' => 'HMP Track - Taxonomy',
+		'fields' => array(
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			'tid' => array(
+				'description' => 'Roadblock TID',
+				'type' => 'int',
+			),
+			'aid' => array(
+				'description' => 'ID',
+				'type' => 'int',
+			),
+		),
+		'primary key' => array('id'),
+	); 
+	$schema = Database::getConnection()->schema();
+	$schema->createTable('hmp_track_ads_taxonomy', $spec);
+}

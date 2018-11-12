@@ -3,8 +3,7 @@ var _avp = _avp || [];
 Drupal.behaviors.hmp_track = {
 	attach: function (context, settings) {
 	  console.log(settings.hmp_track);
-	  
-      loadAdvertAVP(settings.hmp_track['advertserve_url'],settings.hmp_track['advertserve_timeout']);
+    loadAdvertAVP(settings.hmp_track['advertserve_url'],settings.hmp_track['advertserve_timeout']);
 	  loadDMD(settings.hmp_track['dmd_id']);
 	}
 };
