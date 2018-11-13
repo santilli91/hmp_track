@@ -4,3 +4,9 @@ hmp_track.config_form:
   parent: system.admin_config_system
   route_name: hmp_track.config_form
   weight: 100
+
+hmp_track.road_block_admin:
+  title: Road Block
+  route_name: hmp_track.road_block_admin
+  parent: system.admin_content
+  description: 'List/Manage all roadblocks'

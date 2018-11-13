@@ -5,3 +5,19 @@ hmp_track.config_form:
     _title: 'Tracking Configuration'
   requirements:
     _permission: 'administer nodes'
+
+hmp_track.road_block_form:
+  path: '/admin/content/roadblock/{aid}'
+  defaults:
+    _form: '\Drupal\hmp_track\Form\RoadBlockForm'
+    _title: 'RoadBlock Configuration'
+  requirements:
+    _permission: 'administer nodes'
+
+hmp_track.road_block_admin:
+  path: '/admin/content/roadblock'
+  defaults:
+    _form: '\Drupal\hmp_track\Form\RoadBlockAdmin'
+    _title: 'Road Blocks'
+  requirements:
+    _permission: 'administer nodes'

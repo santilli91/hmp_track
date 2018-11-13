@@ -1,0 +1,4 @@
+hmp_track.road_block_admin:
+  title: Road Block
+  route_name: hmp_track.road_block_admin
+  base_route: system.admin_content

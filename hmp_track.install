@@ -5,6 +5,7 @@ use Drupal\Core\Database\Database;
 /** Schema **/
 
 function hmp_track_schema() {
+	//Core HMP Road Blocking Table
 	$spec = array(
 		'description' => 'HMP Track - Ads',
 		'fields' => array(
@@ -22,12 +23,17 @@ function hmp_track_schema() {
 				'type' => 'varchar',
 				'length' => 64,
 			),
+			'enabled' => array(
+				'type' => 'int',
+				'default_value' => 0,
+			),
 		),
 		'primary key' => array('id'),
 	); 
 	$schema = Database::getConnection()->schema();
 	$schema->createTable('hmp_track_ads', $spec);
 
+	//Table to contain URI paths for roadblocking (ref to hmp_track_ads table)
 	$spec = array(
 		'description' => 'HMP Track - URI',
 		'fields' => array(
@@ -50,6 +56,7 @@ function hmp_track_schema() {
 	$schema = Database::getConnection()->schema();
 	$schema->createTable('hmp_track_ads_uri', $spec);
 
+	//Table to contain Taxonomy TID for roadblocking (ref to hmp_track_ads table)
 	$spec = array(
 		'description' => 'HMP Track - Taxonomy',
 		'fields' => array(
@@ -149,4 +156,17 @@ function hmp_track_update_8102() {
 	); 
 	$schema = Database::getConnection()->schema();
 	$schema->createTable('hmp_track_ads_taxonomy', $spec);
+}
+
+/** 
+	Update 8.1.03
+	-Added Enabled Field
+**/
+function hmp_track_update_8103() {
+	$spec = array(
+		'type' => 'int',
+		'default_value' => 0,
+	); 
+	$schema = Database::getConnection()->schema();
+	$schema->addField('hmp_track_ads', 'enabled', $spec);
 }
