@@ -1,0 +1,16 @@
+Name: HMP Track
+User: Santilli91
+Language: PHP
+Platform: Drupal
+Description:
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+
+Tracking Module for HMP
+
+Integrates Ad systems with Tracking systems
+	-Woopra
+	-Advert Serve
+	-Proclivity
+	-DMD
+	-HMP Master Database
