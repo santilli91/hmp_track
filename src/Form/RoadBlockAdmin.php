@@ -32,7 +32,7 @@ class RoadBlockAdmin extends FormBase {
 
 		$form['break'] = array(
 			'#type' => 'item',
-			'#markup' => '<br><hr><br>',
+			'#markup' => '<br><hr><br><a href="/admin/content/roadblock/new">New Roadblock</a><br/><br/><hr><br>',
 		);
 
 		$form['list'] = array(

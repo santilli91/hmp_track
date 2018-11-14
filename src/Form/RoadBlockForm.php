@@ -10,9 +10,15 @@ use Drupal\Core\Routing\TrustedRedirectResponse;
 
 class RoadBlockForm extends FormBase {
 	public function buildForm(array $form, FormStateInterface $form_state, $aid = null) {
-		$values = array();
+		$values = $delete = array();
 		if(is_numeric($aid)) {
 			$values = $this->getDefaults($aid);
+			if($values['id']) {
+				$delete = array(
+					'#type' => 'checkbox',
+					'#title' => '<b>DELETE(THIS WILL DELETE):</b>',
+				);
+			}
 		}
 		/** Ad Road Blocking Info **/
 		$form['Ad'] = array(
@@ -40,15 +46,16 @@ class RoadBlockForm extends FormBase {
 			'#title' => 'Enabled',
 			'#default_value' => isset($values['enabled'])?$values['enabled']:'',
 		);
-
+		$form['delete'] = $delete;
 		/** Submit Button **/
 		$form['break'] = array(
 			'#type' => 'item',
 			'#markup' => '<br><hr><br>',
 		);
+		
 		$form['submit'] = array(
 			'#type' => 'submit',
-			'#value' => 'Submit',
+			'#value' => 'Save',
 		);
 		return $form;
 	}
@@ -77,12 +84,19 @@ class RoadBlockForm extends FormBase {
 			$response =  new TrustedRedirectResponse('/admin/content/roadblock/' . $id);
 			$response->send();
 		} else {
-			$query = \Drupal::database()->update('hmp_track_ads')->fields(array(
-				'name' => $sub['name'],
-				'ad_id' => $sub['ad_id'],
-				'enabled' => $sub['enabled']
-			))->condition('id',$sub['id'])->execute();
-			drupal_set_message('Updated!');
+			if($form_state->getValue('delete') == 1) {
+				$query = \Drupal::database()->delete('hmp_track_ads')->condition('id',$sub['id'])->execute();
+				drupal_set_message('Roadblock: ' . $sub['name'] . ' has been deleted');
+				$response =  new TrustedRedirectResponse('/admin/content/roadblock/');
+				$response->send();
+			} else {
+				$query = \Drupal::database()->update('hmp_track_ads')->fields(array(
+					'name' => $sub['name'],
+					'ad_id' => $sub['ad_id'],
+					'enabled' => $sub['enabled']
+				))->condition('id',$sub['id'])->execute();
+				drupal_set_message('Updated!');
+			}
 		}
 
 	}
