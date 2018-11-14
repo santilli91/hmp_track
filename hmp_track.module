@@ -1,8 +1,12 @@
 <?php
 
+/** **/
+function hmp_track_preprocess_html(&$var) {
+}
+
 /** Page Attachements **/
 function hmp_track_page_attachments(array &$attachments) {
-	$hmp_track = \Drupal::state()->get('hmp_track');
+	$hmp_track = hmp_track_get_variables();
 	$attachments['#attached']['drupalSettings']['hmp_track'] = $hmp_track;
   	$attachments['#attached']['library'][] = 'hmp_track/hmp_track';
 }
@@ -21,4 +25,52 @@ function hmp_track_library_info_build() {
 	return $libraries;
 }
 
-/** **/
+/** Compile all Global Variables for use later **/
+function hmp_track_get_variables() {
+	$variables = array();
+	$variables['config'] = \Drupal::state()->get('hmp_track');
+	$variables['email'] = hmp_track_get_email();
+
+
+	return $variables;
+}
+
+/** Get User's email address via multiple sources and format **/
+function hmp_track_get_email() {
+	$email = null;
+	if(!$email)
+		$email = hmp_track_get_hmp_id();
+	if(!$email)
+		$email = hmp_track_get_drupal_email(); 
+
+	if($email) 
+		return array(
+			'plain' => $email,
+			'base64' => base64_encode($email),
+			'hash' => hash('sha256',$email)
+		);
+	return null;
+}
+
+/** Get User's email via hmp_id parameter in URL **/
+function hmp_track_get_hmp_id() {
+	$email = null;
+	if(isset($_GET['hmpid'])) {
+		if(strpos($_GET['hmpid'],'@'))
+			$email = $_GET['hmpid'];
+		else
+			$email =  base64_decode($_GET['hmpid']);
+	}
+	return $email;
+}
+
+/** Get User's email via Drupal account **/
+function hmp_track_get_drupal_email() {
+	$email = null;
+	$uid = \Drupal::currentUser()->id();
+	if($uid != 0) {
+		$user = Drupal\user\Entity\User::load($uid);
+		$email = $user->mail->value;
+	}
+	return $email;
+}

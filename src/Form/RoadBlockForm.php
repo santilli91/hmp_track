@@ -19,6 +19,11 @@ class RoadBlockForm extends FormBase {
 					'#title' => '<b>DELETE(THIS WILL DELETE):</b>',
 				);
 			}
+			else {
+				drupal_set_message('That roadblock does not exist, you have been redirected here');
+				$response =  new TrustedRedirectResponse('/admin/content/roadblock/');
+				$response->send();
+			}
 		}
 		/** Ad Road Blocking Info **/
 		$form['Ad'] = array(
