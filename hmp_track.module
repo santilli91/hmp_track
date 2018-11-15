@@ -1,7 +1,12 @@
 <?php
 
+include 'hmp_track.roadblock.inc';
+
 /** **/
 function hmp_track_preprocess_html(&$var) {
+	hmp_track_get_adcode(1,200);
+	hmp_track_get_adcode(1,200);
+	hmp_track_get_adcode(1,200);
 }
 
 /** Page Attachements **/

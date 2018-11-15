@@ -36,6 +36,11 @@ class ConfigForm extends FormBase {
 			'#default_value' => $hmp_track['advertserve_timeout'],
 			'#title' => 'AdvertServe Timeout (Ad Load Delay): ',
 		);
+		$form['advertserve_rosID'] = array(
+			'#type' => 'textfield',
+			'#default_value' => $hmp_track['advertserve_rosID'] != ''?$hmp_track['advertserve_rosID']:'ros_ad',
+			'#title' => 'AD Server Default ROS Ad Code',
+		);
 
 		/** Proclivity Info **/
 		$form['proclivity'] = array(
@@ -96,6 +101,7 @@ class ConfigForm extends FormBase {
 			'woopra_id'			=>	$form_state->getValue('woopra_id'),
 			'advertserve_url'	=>	$form_state->getValue('advertserve_url'),
 			'advertserve_timeout'	=>	$form_state->getValue('advertserve_timeout'),
+			'advertserve_rosID'	=>	$form_state->getValue('advertserve_rosID'),
 			'proclivity_sid'	=>	$form_state->getValue('proclivity_sid'),
 			'proclivity_puid'	=>	$form_state->getValue('proclivity_puid'),
 			'proclivity_url'	=>	$form_state->getValue('proclivity_url'),

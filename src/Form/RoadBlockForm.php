@@ -81,7 +81,7 @@ class RoadBlockForm extends FormBase {
 			'name' => $form_state->getValue('name'),
 			'ad_id' => $form_state->getValue('id'),
 			'enabled' => $form_state->getValue('enabled'),
-			'uris' => explode(PHP_EOL,$form_state->getValue('uri'))
+			'uris' => preg_split('/\r\n|\r|\n/',$form_state->getValue('uri'))
 		);
 		/** If there is a new item **/
 		if($sub['id'] == 'new') {
