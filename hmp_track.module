@@ -4,10 +4,9 @@ include 'hmp_track.roadblock.inc';
 
 /** **/
 function hmp_track_preprocess_html(&$var) {
-	hmp_track_get_adcode(1,200);
-	hmp_track_get_adcode(1,200);
-	hmp_track_get_adcode(1,200);
+	hmp_track_get_adcode(2,3);
 }
+
 
 /** Page Attachements **/
 function hmp_track_page_attachments(array &$attachments) {

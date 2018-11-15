@@ -2,21 +2,35 @@
 $GLOBALS['hmp_track']['roadblock'] = null;
 /** Get ad code **/
 function hmp_track_get_adcode($zid,$size) {
-	$ID = isset($GLOBALS['hmp_track']['roadblock'])?$GLOBALS['hmp_track']['roadblock']:hmp_track_get_raodblock();
+	$ID = isset($GLOBALS['hmp_track']['roadblock'])?$GLOBALS['hmp_track']['roadblock']:hmp_track_get_roadblock();
+	echo $ID;
 }
 
 /** Get Roadblock Info **/
-function hmp_track_get_raodblock() {
-	$aid = null;
-	$aid = hmp_track_get_roadblock_uri();
-	if($aid) {
-		$GLOBALS['hmp_track']['roadblock'] = hmp_track_get_roadblockID($aid);
+function hmp_track_get_roadblock() {
+	$token = null;
+
+	if(function_exists('hmp_track_roadblock_pre')) 
+		$token = hmp_track_roadblock_pre();
+
+	if(!$token) {
+		$aid = hmp_track_get_roadblock_uri();
+		if($aid) 
+			$token = hmp_track_get_roadblockID($aid);
+	}
+
+	if(!$token)
+		if(function_exists('hmp_track_roadblock_post'))
+			$token = hmp_track_roadblock_post();
+
+	if($token) {
+		$GLOBALS['hmp_track']['roadblock'] = $token;
 	} else {
 		$hmp_track = \Drupal::state()->get('hmp_track');
 		$GLOBALS['hmp_track']['roadblock'] = $hmp_track['advertserve_rosID'];
-		$aid = $hmp_track['advertserve_rosID'];
+		$token = $hmp_track['advertserve_rosID'];
 	}
-	return $aid;
+	return $token;
 }
 
 /** Get Roadblock By URI **/
@@ -33,7 +47,7 @@ function hmp_track_get_roadblock_uri() {
 
 /** Get Roadblock ID by AID **/
 function hmp_track_get_roadblockID($aid) {
-	$ID = \Drupal::database()->select('hmp_track_ads','a')->fields('a',['id'])->condition('a.ad_id',$aid,'=')->execute()->fetchField();
+	$ID = \Drupal::database()->select('hmp_track_ads','a')->fields('a',['ad_id'])->condition('a.id',$aid,'=')->execute()->fetchField();
 	if($ID)
 		return $ID;
 	return null;
