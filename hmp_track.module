@@ -2,9 +2,10 @@
 
 include 'hmp_track.roadblock.inc';
 
+
 /** **/
-function hmp_track_preprocess_html(&$var) {
-	hmp_track_get_adcode(2,3);
+function hmp_track_preprocess_page(&$var) {
+	$var['page']['content']= t(hmp_track_get_adcode(10,'300_250'));
 }
 
 
