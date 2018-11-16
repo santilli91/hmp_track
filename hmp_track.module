@@ -1,11 +1,11 @@
 <?php
 
 include 'hmp_track.roadblock.inc';
-
+$GLOBALS['hmp_track'] = array();
 
 /** **/
 function hmp_track_preprocess_page(&$var) {
-	$var['page']['content']= t(hmp_track_get_adcode(10,'300_250'));
+	$var['page']['content'] = t(hmp_track_get_adcode(10,'300_250','300x250'));
 }
 
 
@@ -35,8 +35,8 @@ function hmp_track_get_variables() {
 	$variables = array();
 	$variables['config'] = \Drupal::state()->get('hmp_track');
 	$variables['email'] = hmp_track_get_email();
-
-
+	$variables['npi'] = hmp_track_get_NPI($variables['email']['plain']);
+	$GLOBALS['hmp_track'] = $variables;
 	return $variables;
 }
 
@@ -55,6 +55,15 @@ function hmp_track_get_email() {
 			'hash' => hash('sha256',$email)
 		);
 	return null;
+}
+
+/** Get NPI Number via cookie, local user, woopra, or Master Server **/
+function hmp_track_get_NPI($email = null) {
+	$npi = null;
+	if(isset($_COOKIE['enc_docid'])) {
+		$npi = base64_decode($_COOKIE['enc_docid']);
+	}
+	return $npi;
 }
 
 /** Get User's email via hmp_id parameter in URL **/
