@@ -67,6 +67,11 @@ class ConfigForm extends FormBase {
 			'#default_value' => $hmp_track['proclivity_px'],
 			'#title' => 'Proclivity User PX URL:',
 		);
+		$form['proclivity_reserve'] = array(
+			'#type' => 'textfield',
+			'#default_value' => $hmp_track['proclivity_reserve'],
+			'#title' => 'Proclivity Reserve Deal ID:',
+		);
 
 		/** DMD Info **/
 		$form['dmd'] = array(
@@ -106,6 +111,7 @@ class ConfigForm extends FormBase {
 			'proclivity_puid'	=>	$form_state->getValue('proclivity_puid'),
 			'proclivity_url'	=>	$form_state->getValue('proclivity_url'),
 			'proclivity_px'		=>	$form_state->getValue('proclivity_px'),
+			'proclivity_reserve'		=>	$form_state->getValue('proclivity_reserve'),
 			'dmd_id'			=>	$form_state->getValue('dmd_id')
 		);
 		\Drupal::state()->set('hmp_track',$hmp_track);

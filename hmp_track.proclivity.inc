@@ -39,7 +39,8 @@ function hmp_track_proc_request() {
 	if($GLOBALS['hmp_track']['npi'] != '') 
 	//if($GLOBALS['hmp_track']['npi'] =  9999999990)
 		//&& $_COOKIE['tar_enc_npi'] != '9999999990' 
-	 {
+	 {	
+	 	$hmp_track = \Drupal::state()->get('hmp_track');
 		$npi =  hash('sha256',$GLOBALS['hmp_track']['npi']);
 		//echo $npi; exit;
 		$url = $GLOBALS['hmp_track']['config']['proclivity_url'];
@@ -48,9 +49,7 @@ function hmp_track_proc_request() {
 		$pubid = '&pubid=' . $GLOBALS['hmp_track']['config']['proclivity_puid'];
 		$siteid = '&siteid=' . $GLOBALS['hmp_track']['config']['proclivity_sid'];
 
-		$val = \Drupal::state()->get('proc_pl');
-		$pl = $val == ''?$val:'&pl=' . $val;
-		//$pl = '&pl=940';
+		$pl = $hmp_track['proclivity_reserve'] == ''?'':'&pl=' . $hmp_track['proclivity_reserve'];
 		$smap = '&smap=' . '(728x90,1),(300x250,1)';
 
 		$url .= $cid . $pubid . $siteid . $smap . $pl;
@@ -62,9 +61,7 @@ function hmp_track_proc_request() {
 		  
 		  $data = json_decode($response->getBody());
 		  $ads = array();
-		  /*echo '<!--this is test michael<pre>';
-		  print_r($data);
-		  echo '</pre>-->';*/
+
 		  foreach($data->ads as $ad) {
 			$size = $ad->w . 'x' . $ad->h;
 			$ads['code'][$size][] = $ad;
@@ -76,8 +73,6 @@ function hmp_track_proc_request() {
 		catch (RequestException $e) {
 		    return FALSE;
 		}
-	} /*else {
-		setcookie('tar_enc_npi','',time()-15,'/');
-	}*/
+	} 
 	return null;
 }

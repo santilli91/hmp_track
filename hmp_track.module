@@ -5,7 +5,7 @@ $GLOBALS['hmp_track'] = array();
 
 /** **/
 function hmp_track_preprocess_page(&$var) {
-	$var['page']['content'] = t(hmp_track_get_adcode(10,'300_250','300x250'));
+	//$var['page']['content'] = t(hmp_track_get_adcode(10,'300_250','300x250'));
 }
 
 
