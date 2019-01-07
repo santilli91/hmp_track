@@ -29,7 +29,12 @@ class ConfigForm extends FormBase {
 		$form['advertserve_url'] = array(
 			'#type' => 'textfield',
 			'#default_value' => $hmp_track['advertserve_url'],
-			'#title' => 'AdvertServe URL (full url): ',
+			'#title' => 'AdvertServe URL (ajax) (full url): ',
+		);
+		$form['advertserve_url_s'] = array(
+			'#type' => 'textfield',
+			'#default_value' => $hmp_track['advertserve_url_s'],
+			'#title' => 'AdvertServe URL (standard) (full url): ',
 		);
 		$form['advertserve_timeout'] = array(
 			'#type' => 'number',
@@ -105,6 +110,7 @@ class ConfigForm extends FormBase {
 		$hmp_track = array(
 			'woopra_id'			=>	$form_state->getValue('woopra_id'),
 			'advertserve_url'	=>	$form_state->getValue('advertserve_url'),
+			'advertserve_url_s'	=>	$form_state->getValue('advertserve_url_s'),
 			'advertserve_timeout'	=>	$form_state->getValue('advertserve_timeout'),
 			'advertserve_rosID'	=>	$form_state->getValue('advertserve_rosID'),
 			'proclivity_sid'	=>	$form_state->getValue('proclivity_sid'),
