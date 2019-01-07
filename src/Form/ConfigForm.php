@@ -72,6 +72,11 @@ class ConfigForm extends FormBase {
 			'#default_value' => $hmp_track['proclivity_px'],
 			'#title' => 'Proclivity User PX URL:',
 		);
+		$form['proclivity_px_token'] = array(
+			'#type' => 'textfield',
+			'#default_value' => $hmp_track['proclivity_px_token'],
+			'#title' => 'Proclivity User PX Token:',
+		);
 		$form['proclivity_reserve'] = array(
 			'#type' => 'textfield',
 			'#default_value' => $hmp_track['proclivity_reserve'],
@@ -117,6 +122,7 @@ class ConfigForm extends FormBase {
 			'proclivity_puid'	=>	$form_state->getValue('proclivity_puid'),
 			'proclivity_url'	=>	$form_state->getValue('proclivity_url'),
 			'proclivity_px'		=>	$form_state->getValue('proclivity_px'),
+			'proclivity_px_token'		=>	$form_state->getValue('proclivity_px_token'),
 			'proclivity_reserve'		=>	$form_state->getValue('proclivity_reserve'),
 			'dmd_id'			=>	$form_state->getValue('dmd_id')
 		);

@@ -2,9 +2,10 @@ var _avp = _avp || [];
 
 Drupal.behaviors.hmp_track = {
 	attach: function (context, settings) {
-	  console.log(settings.hmp_track);
+	  //console.log(settings.hmp_track);
     loadAdvertAVP(settings.hmp_track.config['advertserve_url'],settings.hmp_track.config['advertserve_timeout']);
 	  loadDMD(settings.hmp_track.config['dmd_id']);
+    proclivityPX(settings.hmp_track);
 	}
 };
 
@@ -30,4 +31,16 @@ function loadAdvertAVP(server,timeout) {
   if(timeout != '')
     window.setTimeout(load, timeout);
   })();
+}
+
+function proclivityPX(config) {
+  if(config.config['proclivity_px']) {
+    wec.browse( { 
+      token :  config.config['proclivity_px_token'],
+      user_id : config.npi,
+      pubid:  '635',
+      siteid :  '63502',
+      puid: config.uid
+    } );
+  }
 }

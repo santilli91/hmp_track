@@ -36,6 +36,7 @@ function hmp_track_get_variables() {
 	$variables['config'] = \Drupal::state()->get('hmp_track');
 	$variables['email'] = hmp_track_get_email();
 	$variables['npi'] = hmp_track_get_NPI($variables['email']['plain']);
+	$variables['uid'] = $uid = \Drupal::currentUser()->id();
 	$GLOBALS['hmp_track'] = $variables;
 	return $variables;
 }
