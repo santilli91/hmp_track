@@ -14,3 +14,20 @@ Integrates Ad systems with Tracking systems
 	-Proclivity
 	-DMD
 	-HMP Master Database
+
+
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+AD POSITION BLOCK INSTRUCTION
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+FIELDS:
+	-ZID: Zone ID of ad zone
+	-Title: Indentifier for block, not shown
+	-Ad Type: Load ad via AJAX or HTML (used for crawlers/floaters/etc...)
+	-Ad Size: Used for Proclivity, lets Proclivity know which size ad to load
+NOTES:
+	-Don't use HTML type ads in Ad Position block if module: Big Pipe is installed
+		-This will cause the document write statement to run after page load leaving blank screen
+		-If HTML and Bigpipe are both required, embed ad code directly into the template
+			-Function: print hmp_track_get_adcode( <zone_id> , <ad_type> , <ad_size>);
