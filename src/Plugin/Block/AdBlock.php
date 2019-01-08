@@ -8,7 +8,8 @@ use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Block that produces a list of all parent categories, given context, also lists current parent category's children.
+ * Block for ad positions.  Do not use HTML ads in combination with big pipe. 
+ * If HTML ads are needed + Big Pipe, embed ads directly in template 
  *
  * @Block(
  *   id = "hmp_ad_block",

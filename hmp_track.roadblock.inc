@@ -10,9 +10,9 @@ function hmp_track_get_adcode($zid,$type,$size = null) {
 	$ad_code = hmp_channel_get_proc_ad($size);
 
 	if($ad_code == null) {
+		$config = \Drupal::state()->get('hmp_track');
 		/** Return Proper Ad code based on TYPE parameter **/
-		if($type == 'html') {
-			$config = \Drupal::state()->get('hmp_track');
+		if($type == 'html' && $config['advertserve_url_s'] != '') {
 				$ad_code = "<div id='avp_html_ad_$zid'>";
 
 				$ad_code .= "<script type=\"text/javascript\">
@@ -20,7 +20,7 @@ function hmp_track_get_adcode($zid,$type,$size = null) {
 			</script>";
 				$ad_code .= "</div>";
 		}
-		else {
+		else if($config['advertserve_url']){
 			
 			$id = "avp_zid_" . $zid . $type;
 			$ad_code = "<div id='$id'><script type='text/javascript'>_avp.push({tagid:'$id',alias:'/',type:'banner',zid:$zid,pid:0,custom1:'$token'});</script></div>";
