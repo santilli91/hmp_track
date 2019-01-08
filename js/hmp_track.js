@@ -1,11 +1,14 @@
 var _avp = _avp || [];
-
+var _hmpHasRun = _hmpHasRun || 0;
 Drupal.behaviors.hmp_track = {
 	attach: function (context, settings) {
-	  //console.log(settings.hmp_track);
-    loadAdvertAVP(settings.hmp_track.config['advertserve_url'],settings.hmp_track.config['advertserve_timeout']);
-	  loadDMD(settings.hmp_track.config['dmd_id']);
-    proclivityPX(settings.hmp_track);
+    if(_hmpHasRun == 0) {
+      loadAdvertAVP(settings.hmp_track.config['advertserve_url'],settings.hmp_track.config['advertserve_timeout']);
+  	  loadDMD(settings.hmp_track.config['dmd_id']);
+      proclivityPX(settings.hmp_track);
+      woopraScripts(settings.hmp_track);
+      _hmpHasRun = 1;
+    }
 	}
 };
 
@@ -43,4 +46,29 @@ function proclivityPX(config) {
       puid: config.uid
     } );
   }
+}
+
+function woopraScripts(config) {
+  (function(){
+        var t,i,e,n=window,o=document,a=arguments,s="script",r=["config","track","identify","visit","push","call","trackForm","trackClick"],c=function(){var t,i=this;for(i._e=[],t=0;r.length>t;t++)(function(t){i[t]=function(){return i._e.push([t].concat(Array.prototype.slice.call(arguments,0))),i}})(r[t])};for(n._w=n._w||{},t=0;a.length>t;t++)n._w[a[t]]=n[a[t]]=n[a[t]]||new c;i=o.createElement(s),i.async=1,i.src="//static.woopra.com/js/w.js",e=o.getElementsByTagName(s)[0],e.parentNode.insertBefore(i,e)
+  })("woopra");
+  woopra.config({
+      domain: config.config['woopra_id']
+  });
+  if(config.email['plain'] != '') {
+    woopra.identify({
+        id: config.email['hash'],
+        email: config.email['base64'],
+    });
+  }
+  if(config.npi != '') {
+    woopra.identify({
+      npi: config.npi,
+    })
+  }
+
+  woopra.track("pv",{
+      url: window.location.pathname,
+      title: document.title,
+  });
 }
