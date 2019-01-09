@@ -11,19 +11,20 @@ function hmp_track_get_adcode($zid,$type,$size = null) {
 
 	if($ad_code == null) {
 		$config = \Drupal::state()->get('hmp_track');
+		$email = $GLOBALS['hmp_track']['email']['base64'];
 		/** Return Proper Ad code based on TYPE parameter **/
 		if($type == 'html' && $config['advertserve_url_s'] != '') {
 				$ad_code = "<div id='avp_html_ad_$zid'>";
 
 				$ad_code .= "<script type=\"text/javascript\">
-			document.write('<scr'+'ipt src=\"". $config['advertserve_url_s'] ."?zid=$zid&pid=0&custom1=$token&crawler=true&align=center&closeable=false&polite=false&spacing=10&bgcolor=transparent&resolution='+(window.innerWidth||screen.width)+'x'+(window.innerHeight||screen.height)+'&random='+Math.floor(89999999*Math.random()+10000000)+'&millis='+new Date().getTime()+'&referrer='+encodeURIComponent((window!=top&&window.location.ancestorOrigins)?window.location.ancestorOrigins[window.location.ancestorOrigins.length-1]:document.location)+'\" type=\"text/javascript\"></scr'+'ipt>');
+			document.write('<scr'+'ipt src=\"". $config['advertserve_url_s'] ."?zid=$zid&pid=0&custom1=$token&custom2=$email&crawler=true&align=center&closeable=false&polite=false&spacing=10&bgcolor=transparent&resolution='+(window.innerWidth||screen.width)+'x'+(window.innerHeight||screen.height)+'&random='+Math.floor(89999999*Math.random()+10000000)+'&millis='+new Date().getTime()+'&referrer='+encodeURIComponent((window!=top&&window.location.ancestorOrigins)?window.location.ancestorOrigins[window.location.ancestorOrigins.length-1]:document.location)+'\" type=\"text/javascript\"></scr'+'ipt>');
 			</script>";
 				$ad_code .= "</div>";
 		}
 		else if($config['advertserve_url']){
 			
 			$id = "avp_zid_" . $zid . $type;
-			$ad_code = "<div id='$id'><script type='text/javascript'>_avp.push({tagid:'$id',alias:'/',type:'banner',zid:$zid,pid:0,custom1:'$token'});</script></div>";
+			$ad_code = "<div id='$id'><script type='text/javascript'>_avp.push({tagid:'$id',alias:'/',type:'banner',zid:$zid,pid:0,custom1:'$token',custom2:'$email'});</script></div>";
 		}
 	}
     return $ad_code;
