@@ -30,4 +30,15 @@ NOTES:
 	-Don't use HTML type ads in Ad Position block if module: Big Pipe is installed
 		-This will cause the document write statement to run after page load leaving blank screen
 		-If HTML and Bigpipe are both required, embed ad code directly into the template
-			-Function: print hmp_track_get_adcode( <zone_id> , <ad_type> , <ad_size>);
+			-Function: echo hmp_track_get_adcode( <zone_id> , <ad_type> , <ad_size>);
+
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+CUSTOM ROADBLOCK CONDITIONS INSTRUCTION
+-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
+
+-Functions to generate custom ad tokens.  Each functions returns only a string containing the custom token
+-To have custom roadblock conditions run before all other conditions
+	function: hmp_track_roadblock_pre();
+-To have custom roadblock conditions run after all other conditions but before default ROS
+	function: hmp_track_roadblock_post();
