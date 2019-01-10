@@ -6,7 +6,7 @@ $GLOBALS['hmp_track']['roadblock'] = null;
 /** Get ad code **/
 function hmp_track_get_adcode($zid,$type,$size = null) {
 	$token = isset($GLOBALS['hmp_track']['roadblock'])?$GLOBALS['hmp_track']['roadblock']:hmp_track_get_roadblock();
-	$token = 'consultant_ros';
+	//$token = 'consultant_ros';
 	$ad_code = hmp_channel_get_proc_ad($size);
 
 	if($ad_code == null) {
