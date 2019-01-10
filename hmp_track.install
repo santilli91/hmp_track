@@ -1,7 +1,7 @@
 <?php
 
 use Drupal\Core\Database\Database;
-
+use Drupal\Core\Database\Database\Schema;
 /** Schema **/
 
 function hmp_track_schema() {
@@ -30,8 +30,7 @@ function hmp_track_schema() {
 		),
 		'primary key' => array('id'),
 	); 
-	$schema = Database::getConnection()->schema();
-	$schema->createTable('hmp_track_ads', $spec);
+	$schema['hmp_track_ads'] = $spec;
 
 	//Table to contain URI paths for roadblocking (ref to hmp_track_ads table)
 	$spec = array(
@@ -53,8 +52,7 @@ function hmp_track_schema() {
 		),
 		'primary key' => array('id'),
 	); 
-	$schema = Database::getConnection()->schema();
-	$schema->createTable('hmp_track_ads_uri', $spec);
+	$schema['hmp_track_ads_uri'] = $spec;
 
 	//Table to contain Taxonomy TID for roadblocking (ref to hmp_track_ads table)
 	$spec = array(
@@ -75,8 +73,8 @@ function hmp_track_schema() {
 		),
 		'primary key' => array('id'),
 	); 
-	$schema = Database::getConnection()->schema();
-	$schema->createTable('hmp_track_ads_taxonomy', $spec);
+	$schema['hmp_track_ads_taxonomy'] = $spec;
+	return $schema;
 }
 
 /** 

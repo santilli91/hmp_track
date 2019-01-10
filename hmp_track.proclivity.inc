@@ -8,7 +8,7 @@ $GLOBALS['proc_ads'] = array();
  */
 function hmp_channel_get_proc_ad($size) {
 	
-	if(!$GLOBALS['proc_ads']['request']) {
+	if(!isset($GLOBALS['proc_ads']['request'])) {
 		$GLOBALS['proc_ads'] = hmp_track_proc_request();
 		$GLOBALS['proc_ads']['request'] = TRUE;
 	}
@@ -67,7 +67,7 @@ function hmp_track_proc_request() {
 			$ads['code'][$size][] = $ad;
 		  }
 		$ads['npi'] = $npi;
-
+		$GLOBALS['proc_ads']['request'] = true;
 		  return $ads;
 		}
 		catch (RequestException $e) {
