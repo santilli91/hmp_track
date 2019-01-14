@@ -73,7 +73,7 @@ function hmp_track_get_roadblock_uri() {
 
 /** Get Roadblock ID by AID **/
 function hmp_track_get_roadblockID($aid) {
-	$ID = \Drupal::database()->select('hmp_track_ads','a')->fields('a',['ad_id'])->condition('a.id',$aid,'=')->execute()->fetchField();
+	$ID = \Drupal::database()->select('hmp_track_ads','a')->fields('a',['ad_id'])->condition('a.id',$aid,'=')->condition('a.enabled',1,'=')->execute()->fetchField();
 	if($ID)
 		return $ID;
 	return null;
