@@ -11,7 +11,7 @@ function hmp_track_get_adcode($zid,$type,$size = null) {
 
 	if($ad_code == null) {
 		$config = \Drupal::state()->get('hmp_track');
-		$email = $GLOBALS['hmp_track']['email']['base64'];
+		$email = $GLOBALS['hmp_track']['email']['plain'];
 		/** Return Proper Ad code based on TYPE parameter **/
 		if($type == 'html') {
 				$ad_code = "<div id='avp_html_ad_$zid'>";
