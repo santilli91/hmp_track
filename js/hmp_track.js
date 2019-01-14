@@ -63,7 +63,7 @@ function woopraScripts(config) {
     if(config.email['plain'] != '') {
       woopra.identify({
           id: config.email['hash'],
-          email: config.email['base64'],
+          email: config.email['plain'],
       });
     }
     if(config.npi != '') {
