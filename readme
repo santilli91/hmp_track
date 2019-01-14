@@ -46,3 +46,6 @@ CUSTOM ROADBLOCK CONDITIONS INSTRUCTION
 	function: hmp_track_roadblock_pre();
 -To have custom roadblock conditions run after all other conditions but before default ROS
 	function: hmp_track_roadblock_post();
+-Roadblocks can block by URI or Email address
+	-URIs must begin with forward slash: /example/page/1
+	-Both URIs and Emails are entered in 1 per line

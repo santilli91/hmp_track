@@ -51,6 +51,11 @@ class RoadBlockForm extends FormBase {
 			'#title' => 'Enabled',
 			'#default_value' => isset($values['enabled'])?$values['enabled']:'',
 		);
+		$form['email'] = array(
+			'#type' => 'textarea',
+			'#title' => 'Emails (one per line):',
+			'#default_value' => isset($values['email'])?$values['email']:'',
+		);
 		$form['uri'] = array(
 			'#type' => 'textarea',
 			'#title' => 'URI (one per line):',
@@ -81,7 +86,8 @@ class RoadBlockForm extends FormBase {
 			'name' => $form_state->getValue('name'),
 			'ad_id' => $form_state->getValue('id'),
 			'enabled' => $form_state->getValue('enabled'),
-			'uris' => preg_split('/\r\n|\r|\n/',$form_state->getValue('uri'))
+			'uris' => preg_split('/\r\n|\r|\n/',$form_state->getValue('uri')),
+			'email' => preg_split('/\r\n|\r|\n/',$form_state->getValue('email'))
 		);
 		/** If there is a new item **/
 		if($sub['id'] == 'new') {
@@ -93,6 +99,7 @@ class RoadBlockForm extends FormBase {
 			))->execute();
 			$id = \Drupal::database()->select('hmp_track_ads','a')->fields('a',['id'])->orderBy('a.id','DESC')->range(0,1)->execute()->fetchField();
 			$this->insertURI($sub['uris'],$id);
+			$this->insertEmail($sub['email'],$id);
 			drupal_set_message('Created!');
 			$response =  new TrustedRedirectResponse('/admin/content/roadblock/' . $id);
 			$response->send();
@@ -115,6 +122,7 @@ class RoadBlockForm extends FormBase {
 					'enabled' => $sub['enabled']
 				))->condition('id',$sub['id'])->execute();
 				$this->insertURI($sub['uris'],$sub['id']);
+				$this->insertEmail($sub['email'],$sub['id']);
 				drupal_set_message('Updated!');
 			}
 		}
@@ -127,6 +135,17 @@ class RoadBlockForm extends FormBase {
 			$query = \Drupal::database()->insert('hmp_track_ads_uri')
 				->fields(array(
 					'uri' => $uri,
+					'aid' => $id
+				))->execute();
+		}
+	} 
+
+	private function insertEmail($emails,$id) {
+		$query = \Drupal::database()->delete('hmp_track_ads_email')->condition('aid',$id,'=')->execute();
+		foreach($emails as $email) {
+			$query = \Drupal::database()->insert('hmp_track_ads_email')
+				->fields(array(
+					'email' => $email,
 					'aid' => $id
 				))->execute();
 		}
@@ -154,6 +173,17 @@ class RoadBlockForm extends FormBase {
 			$uris .= $uri->uri . PHP_EOL;
 		}
 		$data['uri'] = $uris;
+
+		$query = \Drupal::database()->select('hmp_track_ads_email','u');
+		$query->fields('u');
+		$query->condition('u.aid',$aid,'=');
+		$results = $query->execute();
+		$emails = '';
+		foreach($results as $uri) {
+			$emails .= $uri->email . PHP_EOL;
+		}
+		$data['email'] = $emails;
+
 		return $data;
 	}
 }

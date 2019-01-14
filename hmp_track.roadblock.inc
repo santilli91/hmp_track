@@ -38,6 +38,12 @@ function hmp_track_get_roadblock() {
 		$token = hmp_track_roadblock_pre();
 
 	if(!$token) {
+		$aid = hmp_track_get_roadblock_email();
+		if($aid) 
+			$token = hmp_track_get_roadblockID($aid);
+	}
+
+	if(!$token) {
 		$aid = hmp_track_get_roadblock_uri();
 		if($aid) 
 			$token = hmp_track_get_roadblockID($aid);
@@ -65,6 +71,18 @@ function hmp_track_get_roadblock_uri() {
 	$query = \Drupal::database()->select('hmp_track_ads_uri','u');
 	$query->fields('u',['aid']);
 	$query->condition('u.uri',"$uri",'=');
+	$aid = $query->execute()->fetchField();
+	if($aid)
+		return $aid;
+	return null;
+}
+
+/** Get Roadblock By URI **/
+function hmp_track_get_roadblock_email() {
+	$email = $GLOBALS['hmp_track']['email']['plain'];
+	$query = \Drupal::database()->select('hmp_track_ads_email','u');
+	$query->fields('u',['aid']);
+	$query->condition('u.email',"$email",'=');
 	$aid = $query->execute()->fetchField();
 	if($aid)
 		return $aid;
