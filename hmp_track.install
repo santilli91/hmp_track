@@ -54,6 +54,28 @@ function hmp_track_schema() {
 	); 
 	$schema['hmp_track_ads_uri'] = $spec;
 
+	//Table to contain URI paths for roadblocking (ref to hmp_track_ads table)
+	$spec = array(
+		'description' => 'HMP Track - Emails',
+		'fields' => array(
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			'email' => array(
+				'description' => 'Email Address',
+				'type' => 'varchar',
+				'length' => 255,
+			),
+			'aid' => array(
+				'description' => 'ID',
+				'type' => 'int',
+			),
+		),
+		'primary key' => array('id'),
+	); 
+	$schema['hmp_track_ads_email'] = $spec;
+
 	//Table to contain Taxonomy TID for roadblocking (ref to hmp_track_ads table)
 	$spec = array(
 		'description' => 'HMP Track - Taxonomy',
@@ -167,4 +189,32 @@ function hmp_track_update_8103() {
 	); 
 	$schema = Database::getConnection()->schema();
 	$schema->addField('hmp_track_ads', 'enabled', $spec);
+}
+
+/**
+ Update 8.1.04
+ -Add Roadblocking Email Table
+ **/
+function hmp_track_update_8104() {
+	$spec = array(
+		'description' => 'HMP Track - Emails',
+		'fields' => array(
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			'email' => array(
+				'description' => 'Email Address',
+				'type' => 'varchar',
+				'length' => 255,
+			),
+			'aid' => array(
+				'description' => 'ID',
+				'type' => 'int',
+			),
+		),
+		'primary key' => array('id'),
+	);  
+	$schema = Database::getConnection()->schema();
+	$schema->createTable('hmp_track_ads_email', $spec);
 }
