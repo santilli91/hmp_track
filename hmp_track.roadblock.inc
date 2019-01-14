@@ -59,7 +59,9 @@ function hmp_track_get_roadblock() {
 
 /** Get Roadblock By URI **/
 function hmp_track_get_roadblock_uri() {
-	$uri = \Drupal::request()->getRequestUri();
+	$url = \Drupal::request()->getRequestUri();
+	$tmp = explode('?',$url);
+	$uri = $tmp[0];
 	$query = \Drupal::database()->select('hmp_track_ads_uri','u');
 	$query->fields('u',['aid']);
 	$query->condition('u.uri',"$uri",'=');
