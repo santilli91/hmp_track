@@ -12,7 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
  * If HTML ads are needed + Big Pipe, embed ads directly in template 
  *
  * @Block(
- *   id = "hmp_ad_block",
+ *   id = "hmp_track_ad_block",
  *   admin_label = @Translation("Ad Position"),
  * )
  */
