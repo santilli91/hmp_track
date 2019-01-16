@@ -1,4 +1,8 @@
 <?php
+/*Filename: hmp_track.roadblock.inc
+ *Description: Includes functions pertaining to the roadblocking ad system
+ */
+
 include 'hmp_track.proclivity.inc';
 
 $GLOBALS['hmp_track']['roadblock'] = null;
@@ -33,26 +37,27 @@ function hmp_track_get_adcode($zid,$type,$size = null) {
 /** Get Roadblock Info **/
 function hmp_track_get_roadblock() {
 	$token = null;
-
+	
+	//Run Pre Processing Hook (custom if exists)
 	if(function_exists('hmp_track_roadblock_pre')) 
 		$token = hmp_track_roadblock_pre();
-
+	//Run email check, roadblocking by email if applicable
 	if(!$token) {
 		$aid = hmp_track_get_roadblock_email();
 		if($aid) 
 			$token = hmp_track_get_roadblockID($aid);
 	}
-
+	//Run URI Check, roadblocking by uri if applicable
 	if(!$token) {
 		$aid = hmp_track_get_roadblock_uri();
 		if($aid) 
 			$token = hmp_track_get_roadblockID($aid);
 	}
-
+	//Run Post Processing Hook (custom if exists)
 	if(!$token)
 		if(function_exists('hmp_track_roadblock_post'))
 			$token = hmp_track_roadblock_post();
-
+	
 	if($token) {
 		$GLOBALS['hmp_track']['roadblock'] = $token;
 	} else {
