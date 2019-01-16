@@ -1,5 +1,10 @@
 <?php
 
+/**************************
+ *Filename: hmp_track.module
+ *Description: Core module file.  Handles core tasks not specific to any one function.  Setup global array
+ */
+
 include 'hmp_track.roadblock.inc';
 $GLOBALS['hmp_track'] = array();
 
