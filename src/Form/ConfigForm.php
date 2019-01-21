@@ -38,7 +38,7 @@ class ConfigForm extends FormBase {
 		);
 		$form['advertserve_timeout'] = array(
 			'#type' => 'number',
-			'#default_value' => $hmp_track['advertserve_timeout'],
+			'#default_value' => $hmp_track['advertserve_timeout'] != ''?$hmp_track['advertserve_timeout']:0,
 			'#title' => 'AdvertServe Timeout (Ad Load Delay): ',
 		);
 		$form['advertserve_rosID'] = array(
