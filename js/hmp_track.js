@@ -60,7 +60,7 @@ function woopraScripts(config) {
     woopra.config({
         domain: config.config['woopra_id']
     });
-    if(config.email['plain'] != '') {
+    if(config.email) {
       woopra.identify({
           id: config.email['hash'],
           email: config.email['plain'],
