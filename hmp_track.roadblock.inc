@@ -82,15 +82,17 @@ function hmp_track_get_roadblock_uri() {
 	return null;
 }
 
-/** Get Roadblock By URI **/
+/** Get Roadblock By EMAIL **/
 function hmp_track_get_roadblock_email() {
 	$email = $GLOBALS['hmp_track']['email']['plain'];
-	$query = \Drupal::database()->select('hmp_track_ads_email','u');
-	$query->fields('u',['aid']);
-	$query->condition('u.email',"$email",'=');
-	$aid = $query->execute()->fetchField();
-	if($aid)
-		return $aid;
+	if($email != '') {
+		$query = \Drupal::database()->select('hmp_track_ads_email','u');
+		$query->fields('u',['aid']);
+		$query->condition('u.email',"$email",'=');
+		$aid = $query->execute()->fetchField();
+		if($aid)
+			return $aid;
+	}	
 	return null;
 }
 

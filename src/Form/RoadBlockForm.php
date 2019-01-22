@@ -131,12 +131,14 @@ class RoadBlockForm extends FormBase {
 
 	private function insertURI($uris,$id) {
 		$query = \Drupal::database()->delete('hmp_track_ads_uri')->condition('aid',$id,'=')->execute();
-		foreach($uris as $uri) {
-			$query = \Drupal::database()->insert('hmp_track_ads_uri')
-				->fields(array(
-					'uri' => $uri,
-					'aid' => $id
-				))->execute();
+		foreach($uris as $uri) 	{
+			if($uri != '') {
+				$query = \Drupal::database()->insert('hmp_track_ads_uri')
+					->fields(array(
+						'uri' => $uri,
+						'aid' => $id
+					))->execute();
+			}
 		}
 	} 
 
@@ -170,7 +172,9 @@ class RoadBlockForm extends FormBase {
 		$results = $query->execute();
 		$uris = '';
 		foreach($results as $uri) {
-			$uris .= $uri->uri . PHP_EOL;
+			if($uris != '')
+				$uris .= PHP_EOL;
+			$uris .= $uri->uri;
 		}
 		$data['uri'] = $uris;
 
