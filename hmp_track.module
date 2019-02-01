@@ -69,6 +69,9 @@ function hmp_track_get_NPI($email = null) {
 	if(isset($_COOKIE['enc_docid'])) {
 		$npi = base64_decode($_COOKIE['enc_docid']);
 	}
+	if(isset($_COOKIE['tar_enc_npi'])) {
+		$npi = $_COOKIE['tar_enc_npi'];
+	}
 	return $npi;
 }
 

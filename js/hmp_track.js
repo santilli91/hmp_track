@@ -22,7 +22,20 @@ function loadDMD(dmd_id) {
     })(window,document,'script','AIM');
 
     AIM.init(dmd_id);
+    AIM.ready(function(){
+      AIM.ondetect(cb_ondetect);
+    });
   }
+}
+
+//AIM Signal Handler
+function cb_ondetect(json){
+  var _npi = json.npi_number; 
+  if(_npi) {
+    npi = _npi;
+    document.cookie = "tar_enc_npi=" + npi;
+  }
+  console.log('cb_ondetect running');  
 }
 
 function loadAdvertAVP(server,timeout) {
