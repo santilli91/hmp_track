@@ -28,7 +28,7 @@ function hmp_track_get_adcode($zid,$type,$size = null) {
 		else {
 			
 			$id = "avp_zid_" . $zid . $type;
-			$ad_code = "<div id='$id'><script type='text/javascript'>_avp.push({tagid:'$id',alias:'/',type:'banner',zid:$zid,pid:0,custom1:'$token',custom2:'$email'});</script></div>";
+			$ad_code = "<div id='$id'><script type='text/javascript'>_avp.push({tagid:'$id',alias:'/',type:'banner',zid:$zid,pid:0,custom1:'$token',custom2:'$email',onscroll: 0, inview: true});</script></div>";
 		}
 	}
     return $ad_code;
