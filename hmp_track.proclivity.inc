@@ -72,8 +72,6 @@ function hmp_channel_log_proclivity($key,$ad) {
     curl_setopt($ci, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
     curl_setopt($ci, CURLOPT_USERPWD, $username . ":" . $password);
     $response = curl_exec($ci);
-
-    echo '<pre>';print_r(json_decode($response));exit;
 }
 
 /*
