@@ -24,12 +24,56 @@ function hmp_channel_get_proc_ad($size) {
 	        ['cid','" . $GLOBALS['proc_ads']['npi'] . "'],
 	        ['asid','" . $ad->asid . "']]; </script>
 		<script type='text/javascript' src='https://adjs.pswec.com/showad.js'></script><br>";
+
+		hmp_channel_log_proclivity($key,$ad);
+
 		unset($GLOBALS['proc_ads']['code'][$size][$key]);
 		
 		return $jcode;
 	}	
 	
 	return $jcode;
+}
+
+/*
+ * Log the proclivity ad view
+ */
+function hmp_channel_log_proclivity($key,$ad) {
+	$url = 'https://65824442e7f541288413ff2de5d70c51.us-east-1.aws.found.io:9243';
+	$username = 'elastic';
+	$password = 'NHBaYyLRNwQLj5lETf6CTCMM';
+
+	$index = 'proclivity_log';
+	$doc_type = 'default';
+	$port = 9243;
+
+    $json_doc = array(
+                "cid" => $GLOBALS['proc_ads']['npi'],
+                'npi' => $GLOBALS['hmp_track']['npi'],
+                "timestamp" => time(),
+                "asid" => $ad->asid,
+                "h" => $ad->h,
+                't' => $ad->w,
+                "page" => $_SERVER['REQUEST_URI'],
+                "domain" => $_SERVER['HTTP_HOST']
+            );
+    $json_doc = json_encode($json_doc);
+
+    $baseUri = $url.'/'.$index.'/'.$doc_type;
+
+    $ci = curl_init();
+    curl_setopt($ci, CURLOPT_URL, $baseUri);
+    curl_setopt($ci, CURLOPT_PORT, $port);
+    curl_setopt($ci, CURLOPT_TIMEOUT, 200);
+    curl_setopt($ci, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ci, CURLOPT_FORBID_REUSE, 0);
+    curl_setopt($ci, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($ci, CURLOPT_POSTFIELDS, $json_doc);
+    curl_setopt($ci, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ci, CURLOPT_USERPWD, $username . ":" . $password);
+    $response = curl_exec($ci);
+
+    echo '<pre>';print_r(json_decode($response));exit;
 }
 
 /*
