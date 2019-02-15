@@ -10,7 +10,7 @@ function hmp_channel_get_proc_ad($size) {
 	
 	if(!isset($GLOBALS['proc_ads']['request'])) {
 		$GLOBALS['proc_ads'] = hmp_track_proc_request();
-		$GLOBALS['proc_ads']['request'] = TRUE;
+		//$GLOBALS['proc_ads']['request'] = TRUE;
 	}
 
 	$jcode = null;
@@ -25,7 +25,7 @@ function hmp_channel_get_proc_ad($size) {
 	        ['asid','" . $ad->asid . "']]; </script>
 		<script type='text/javascript' src='https://adjs.pswec.com/showad.js'></script><br>";
 
-		hmp_channel_log_proclivity($key,$ad);
+		hmp_channel_log_proclivity($key,$ad,'display');
 
 		unset($GLOBALS['proc_ads']['code'][$size][$key]);
 		
@@ -38,14 +38,14 @@ function hmp_channel_get_proc_ad($size) {
 /*
  * Log the proclivity ad view
  */
-function hmp_channel_log_proclivity($key,$ad) {
-	$url = 'https://65824442e7f541288413ff2de5d70c51.us-east-1.aws.found.io:9243';
+function hmp_channel_log_proclivity($key,$ad,$request) {
+	$url = 'https://65824442e7f541288413ff2de5d70c51.us-east-1.aws.found.io:443';
 	$username = 'elastic';
 	$password = 'NHBaYyLRNwQLj5lETf6CTCMM';
 
 	$index = 'proclivity_log';
 	$doc_type = 'default';
-	$port = 9243;
+	$port = 443;
 
     $json_doc = array(
                 "cid" => $GLOBALS['proc_ads']['npi'],
@@ -55,7 +55,8 @@ function hmp_channel_log_proclivity($key,$ad) {
                 "h" => $ad->h,
                 't' => $ad->w,
                 "page" => $_SERVER['REQUEST_URI'],
-                "domain" => $_SERVER['HTTP_HOST']
+                "domain" => $_SERVER['HTTP_HOST'],
+                'action' => $request
             );
     $json_doc = json_encode($json_doc);
 
@@ -82,6 +83,7 @@ function hmp_track_proc_request() {
 	//if($GLOBALS['hmp_track']['npi'] =  9999999990)
 		//&& $_COOKIE['tar_enc_npi'] != '9999999990' 
 	 {	
+		hmp_channel_log_proclivity('null',$size,'request');
 	 	$hmp_track = \Drupal::state()->get('hmp_track');
 		$npi =  hash('sha256',$GLOBALS['hmp_track']['npi']);
 		//echo $npi; exit;
