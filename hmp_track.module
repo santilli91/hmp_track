@@ -8,6 +8,7 @@
 include 'hmp_track.roadblock.inc';
 $GLOBALS['hmp_track'] = array();
 
+
 /** **/
 function hmp_track_preprocess_page(&$var) {
 	//$var['page']['content'] = t(hmp_track_get_adcode(10,'300_250','300x250'));
@@ -42,6 +43,9 @@ function hmp_track_get_variables() {
 	$variables['email'] = hmp_track_get_email();
 	$variables['npi'] = hmp_track_get_NPI($variables['email']['plain']);
 	$variables['uid'] = $uid = \Drupal::currentUser()->id();
+	$variables['topics'] = '';
+	if(function_exists('hmp_track_send_topics')) 
+		$variables['topics'] = hmp_track_send_topics();
 	$GLOBALS['hmp_track'] = $variables;
 	return $variables;
 }

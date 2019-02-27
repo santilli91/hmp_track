@@ -88,6 +88,7 @@ function woopraScripts(config) {
     woopra.track("pv",{
         url: window.location.pathname,
         title: document.title,
+        topics: config.topics,
     });
   }
 }
