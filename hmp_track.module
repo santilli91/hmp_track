@@ -18,6 +18,8 @@ function hmp_track_preprocess_page(&$var) {
 /** Page Attachements **/
 function hmp_track_page_attachments(array &$attachments) {
 	$hmp_track = hmp_track_get_variables();
+	if(function_exists('hmp_auth0_get_data'))
+		$hmp_track['auth0'] = hmp_auth0_get_data();
 	$attachments['#attached']['drupalSettings']['hmp_track'] = $hmp_track;
   	$attachments['#attached']['library'][] = 'hmp_track/hmp_track';
 }
